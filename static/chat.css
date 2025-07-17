@@ -1,0 +1,270 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 24px;
+}
+
+/* chat-window occupies the entire body of the display and contains all chat messages */
+
+#chat-window {
+    height: 100vh;
+    width: 100vw;
+    margin: 0;
+    border: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+/* chat-message-row contains one chat message (think of it as a row)
+   It is a block element that contains both left and right floats. The
+   per-user modifier classes can be used to style common attributes of
+   an entire row. */
+
+.chat-message-row {
+    padding: 5px;
+    margin: 5px 0;
+    clear: both;
+    display: block;
+    content: "";
+}
+
+/* Uncomment these if desired
+
+.chat-message-row-moderator {
+
+}
+
+.chat-message-row-vip {
+
+}
+
+.chat-message-row-subscriber {
+
+}
+
+.chat-message-row-founder {
+
+}
+
+.chat-message-row-broadcaster {
+
+}
+
+.chat-message-row-bot {
+
+}
+
+.chat-message-row-user {
+
+}
+*/
+
+/* chat-message-left and chat-message-right are the two sides of a chat message
+   They are floated left and right respectively, with different widths.
+   The left side contains the profile image (if enabled), badges, and user information.
+   The right side contains the message itself. */
+
+.chat-message-left {
+    float: left;
+    width: 34%;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 100%;
+}
+
+.chat-message-right {
+    float: right;
+    width: 64%;
+    display: flex;
+    flex-direction: row;
+    white-space: nowrap;
+    overflow: hidden;
+    margin-left: 10px;
+    height: 100%;
+}
+
+/* Profile image styles. All profile images are assigned to the .profile-image class
+   and one of the additional modifier classes. Due to ordering, the additional modifier
+   classes will override the .profile-image class. */
+
+.profile-image {
+    width: 32px;
+    height: 32px;
+    border-radius: 100%;
+    margin-right: 10px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    display: flex;
+}
+
+.profile-image-user {
+    display: none;
+}
+
+.profile-image-moderator {
+    display: flex;
+}
+
+.profile-image-vip {
+    display: flex;
+}
+
+.profile-image-subscriber {
+    display: flex;
+}
+
+.profile-image-founder {
+    display: flex;
+}
+
+.profile-image-broadcaster {
+    display: flex;
+}
+
+.profile-image-bot {
+    display: flex;
+}
+
+/* Message text styles. These classes style the chat message text. All chat messages are assigned
+   the .message-text class and one of the modifier classes based on user type. The modifier classes
+   will override the .message-text class. */
+
+.message-text {
+    color: #ccc;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+    width: 100%;
+    height: 100%;
+    font-weight: 500;
+}
+
+.text-user {
+    color: #ccc;
+}
+
+.text-moderator {
+    color: #ccddcc;
+    font-weight: 600;
+}
+
+.text-vip {
+    color: #ddcccc;
+    font-weight: 600;
+}
+
+.text-subscriber {
+    color: #ccccdd;
+    font-weight: 600;
+}
+
+.text-founder {
+    color: #ccccdd;
+    font-weight: 600;
+}
+
+.text-broadcaster {
+    color: #ff0000;
+}
+
+.text-bot {
+    color: #f8f;
+}
+
+/* The text-action class is added to messages where the user types '/me ...'. */
+.text-action {
+    font-style: italic;
+}
+
+/* User display name text styles. These classes style the chat user display name text. All
+   user display names are assigned the .user-display-name class and one of the modifier classes
+   based on user type. The modifier classes will override the .user-display-name class. */
+
+.user-display-name {
+    font-weight: bold;
+    color: #ccc;
+    text-align: right;
+    margin-left: 5px;
+}
+
+.user-user {
+    color: #ccc;
+}
+
+.user-moderator {
+    color: #ccddcc;
+    font-weight: 600;
+}
+
+.user-vip {
+    color: #ddcccc;
+    font-weight: 600;
+}
+
+.user-subscriber {
+    color: #ccccdd;
+    font-weight: 600;
+}
+
+.user-founder {
+    color: #ccccdd;
+    font-weight: 600;
+}
+
+.user-broadcaster {
+    color: #ff0000;
+}
+
+.user-bot {
+    color: #f8f;
+}
+
+/* Badges styles */
+
+.badges-and-name-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+}
+
+.badge-image {
+    width: 16px;
+    height: 16px;
+    border-radius: 10%;
+    margin-right: 5px;
+}
+
+/* Emotes and cheers styles */
+
+.emote-image {
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.cheer-image {
+    width: 28px;
+    height: 28px;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.emote-image-gigantified {
+    width: 72px;
+    height: 72px;
+    margin: 0;
+    padding: 0;
+    display: block;
+}

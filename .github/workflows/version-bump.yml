@@ -1,0 +1,65 @@
+name: 'Bump Version'
+
+on:
+  workflow_dispatch:
+    inputs:
+      strategy:
+        type: choice
+        description: 'Version bump strategy'
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
+
+jobs:
+  bump-version:
+    name: 'Bump patch version on main branch'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 'Checkout source code'
+        uses: 'actions/checkout@v3'
+        with:
+          ref: main
+          fetch-depth: 0
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - name: npm install
+        run: npm install
+      - name: get-npm-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: Bump release version
+        id: bump_version
+        uses: christian-draeger/increment-semantic-version@1.2.0
+        with:
+          current-version: ${{ steps.package-version.outputs.current-version }}
+          version-fragment: ${{ inputs.strategy }}
+      - name: Print next version
+        run: echo ${{ steps.bump_version.outputs.next-version }} # will print 2.12.0
+      - name: Replace version in package.json file
+        run: |
+          sed -i 's/"version": "[^"]*"/"version": "${{ steps.bump_version.outputs.next-version }}"/' package.json
+      - name: Run version bump script
+        run: npm run build:version
+      - name: Output changes
+        run: git diff
+      - name: npm build
+        run: npm run build
+      - name: Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          title: "Automated version bump: ${{ steps.bump_version.outputs.next-version }}"
+          body: "This PR bumps the version to ${{ steps.bump_version.outputs.next-version }}."
+          branch: "bump-version-${{ steps.bump_version.outputs.next-version }}"
+          base: main
+          draft: always-true
+          labels: 'ignore-for-release'
+          add-paths: |
+            package.json
+            src/main.ts
+          commit-message: "Bump version to ${{ steps.bump_version.outputs.next-version }}"
+          reviewers: "TheStaticMage"

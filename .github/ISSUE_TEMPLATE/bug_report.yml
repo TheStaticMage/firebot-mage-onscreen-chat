@@ -1,0 +1,48 @@
+name: Bug Report
+description: Bug Report
+labels:
+  - Bug
+title: "[Bug Report] Your bug report title here"
+body:
+  - type: textarea
+    attributes:
+      label: Describe the problem
+      description: Please provide a concise description of what you are experiencing.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Expected behavior
+      description: Please provide a concise description of what you expect to happen.
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Steps To reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. ...
+        2. ...
+        3. ...
+    validations:
+      required: false
+  - type: input
+    id: firebotRateLimiter_version
+    attributes:
+      label: Firebot Rate Limiter Version
+      description: What version of Firebot Rate Limiter are you running?
+    validations:
+      required: true
+  - type: input
+    id: firebot_version
+    attributes:
+      label: Firebot Version
+      description: What version of Firebot are you running?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Additional context
+      description: Please provide any additional information that you think may be helpful.
+    validations:
+      required: false

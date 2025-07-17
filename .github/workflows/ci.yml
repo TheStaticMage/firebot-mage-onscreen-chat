@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - "main"
+  pull_request:
+    branches:
+      - "*"
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - name: Create dist directory
+        run: mkdir -p dist
+      - name: npm install
+        run: npm install
+      - name: get-version
+        id: package-version
+        uses: martinbeentjes/npm-get-version-action@v1.3.1
+      - name: check version
+        run: |
+          if [ -z "${{ steps.package-version.outputs.current-version }}" ]; then
+            echo "No version found in package.json"
+            exit 1
+          fi
+          echo "package.json version is ${{ steps.package-version.outputs.current-version }}"
+          script_version=$(grep '^const scriptVersion = ' src/main.ts | cut -d"'" -f2)
+          echo "script version is $script_version"
+          if [ "${{ steps.package-version.outputs.current-version }}" != "$script_version" ]; then
+            echo "Version in package.json does not match version in src/main.ts"
+            exit 1
+          fi
+          echo "Version in package.json matches version in src/main.ts"
+      - name: npm build
+        run: npm run build
+      - name: Run Jest unit tests
+        run: npx jest --ci --coverage

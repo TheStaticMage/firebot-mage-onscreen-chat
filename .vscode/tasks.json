@@ -1,0 +1,11 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "shell",
+			"label": "Run Jest tests",
+			"command": "npx jest",
+			"group": "test"
+		}
+	]
+}

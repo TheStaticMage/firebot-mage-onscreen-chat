@@ -1,0 +1,28 @@
+name: Linting
+
+on:
+  pull_request:
+    branches:
+      - "*"
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - ready_for_review
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+      - name: npm install
+        run: npm install
+      - name: Run ESLint
+        run: npx eslint src/ --max-warnings 0
+      - name: Linelint
+        uses: fernandrone/linelint@master
+        id: linelint

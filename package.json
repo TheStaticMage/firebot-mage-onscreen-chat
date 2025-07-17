@@ -1,0 +1,37 @@
+{
+    "name": "firebot-mage-onscreen-chat",
+    "scriptOutputName": "firebot-mage-onscreen-chat",
+    "version": "0.0.1",
+    "description": "An on-screen chat overlay for Firebot",
+    "main": "",
+    "scripts": {
+        "build": "npm run build:version && npm run build:webpack",
+        "build:dev": "npm run build:version && npm run build:webpack && npm run copy",
+        "build:version": "node ./scripts/update-version.js",
+        "build:webpack": "webpack",
+        "copy": "node ./scripts/copy-build.js",
+        "prepare": "",
+        "tsc": "tsc"
+    },
+    "author": "thestaticmage",
+    "license": "GNU3",
+    "devDependencies": {
+        "@crowbartools/firebot-custom-scripts-types": "github:TheStaticMage/firebot-custom-scripts-types#running",
+        "@eslint/js": "^9.28.0",
+        "@stylistic/eslint-plugin": "^4.4.1",
+        "@types/express": "^4.17.21",
+        "@types/jest": "^30.0.0",
+        "@types/node": "^24.0.14",
+        "jest": "^30.0.4",
+        "raw-loader": "^4.0.2",
+        "terser-webpack-plugin": "^5.3.10",
+        "ts-jest": "^29.4.0",
+        "ts-loader": "^9.5.2",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3",
+        "typescript-eslint": "^8.33.1",
+        "webpack": "^5.89.0",
+        "webpack-cli": "^6.0.1",
+        "webpack-dev-middleware": "^7.4.2"
+    }
+}
