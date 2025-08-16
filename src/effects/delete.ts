@@ -19,7 +19,7 @@ type deleteChatMessageEffectParams = {
 export const deleteChatMessageEffect: Firebot.EffectType<deleteChatMessageEffectParams> = {
     definition: {
         id: 'thestaticmage:firebot-mage-onscreen-chat:delete-chat-message',
-        name: 'Delete Chat Message in Chat Overlay',
+        name: 'Delete Message in Chat Overlay',
         description: 'Deletes a specific chat message in the chat overlay.',
         icon: 'fas fa-trash-alt',
         categories: ["scripting"],
@@ -47,6 +47,9 @@ export const deleteChatMessageEffect: Firebot.EffectType<deleteChatMessageEffect
             acc[key] = key;
             return acc;
         }, {});
+        if (!$scope.effect.routeKey) {
+            $scope.effect.routeKey = 'default';
+        }
     },
     optionsValidator: (effect: deleteChatMessageEffectParams): string[] => {
         const errors: string[] = [];

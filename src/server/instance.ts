@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import { firebot, logger, params } from '../main';
+import { firebot, IntegrationConstants, logger, params } from '../main';
 import { Message } from '../types/message';
 import { ChatServerPayload, PollPayload } from "../types/payloads";
 import { FirebotChatMessage } from "../types/chat-types";
@@ -92,25 +92,26 @@ export class ServerInstance {
         }
 
         const { httpServer } = firebot.modules;
+        const prefix = `${IntegrationConstants.IntegrationId}/${this.serverKey}`;
 
-        httpServer.registerCustomRoute(this.serverKey, "/poll.json", "GET", async (req, res) => {
+        httpServer.registerCustomRoute(prefix, "/poll.json", "GET", async (req, res) => {
             this.handlePoll(req, res);
         });
 
-        httpServer.registerCustomRoute(this.serverKey, "/chat.js", "GET", async (req, res) => {
+        httpServer.registerCustomRoute(prefix, "/chat.js", "GET", async (req, res) => {
             this.getStaticFile(req.path, res);
         });
 
-        httpServer.registerCustomRoute(this.serverKey, "/chat.css", "GET", async (req, res) => {
+        httpServer.registerCustomRoute(prefix, "/chat.css", "GET", async (req, res) => {
             this.getStaticFile(req.path, res);
         });
 
-        httpServer.registerCustomRoute(this.serverKey, "/index.html", "GET", async (req, res) => {
+        httpServer.registerCustomRoute(prefix, "/index.html", "GET", async (req, res) => {
             this.getStaticFile(req.path, res);
         });
 
-        httpServer.registerCustomRoute(this.serverKey, "", "GET", async (req, res) => {
-            this.getStaticFile(req.path, res);
+        httpServer.registerCustomRoute(prefix, "/", "GET", async (req, res) => {
+            res.redirect(`${req.originalUrl.replace(/\/$/, '')}/index.html`);
         });
 
         this.messageCleaner = setInterval(() => {
@@ -137,11 +138,12 @@ export class ServerInstance {
         }
 
         const { httpServer } = firebot.modules;
-        httpServer.unregisterCustomRoute(this.serverKey, "/poll.json", "GET");
-        httpServer.unregisterCustomRoute(this.serverKey, "/chat.js", "GET");
-        httpServer.unregisterCustomRoute(this.serverKey, "/chat.css", "GET");
-        httpServer.unregisterCustomRoute(this.serverKey, "/index.html", "GET");
-        httpServer.unregisterCustomRoute(this.serverKey, "", "GET");
+        const prefix = `${IntegrationConstants.IntegrationId}/${this.serverKey}`;
+        httpServer.unregisterCustomRoute(prefix, "/poll.json", "GET");
+        httpServer.unregisterCustomRoute(prefix, "/chat.js", "GET");
+        httpServer.unregisterCustomRoute(prefix, "/chat.css", "GET");
+        httpServer.unregisterCustomRoute(prefix, "/index.html", "GET");
+        httpServer.unregisterCustomRoute(prefix, "", "GET");
 
         this.isRegistered = false;
     }
@@ -226,7 +228,7 @@ export class ServerInstance {
         }
 
         const messageIdsToDelete = Array.from(this.messages.entries())
-            .filter(([_, msg]) => msg.action === 'add' && msg.message?.username === username)
+            .filter(([, msg]) => msg.action === 'add' && msg.message?.username === username)
             .map(([id]) => id);
 
         if (messageIdsToDelete.length === 0) {
@@ -292,7 +294,7 @@ export class ServerInstance {
 
     private cleanOldMessages(): void {
         const now = Date.now();
-        const keysToDelete = Array.from(this.messages.entries()).filter(([_, msg]) => {
+        const keysToDelete = Array.from(this.messages.entries()).filter(([, msg]) => {
             return msg.timestamp < now - messageTtl;
         });
         if (keysToDelete.length === 0) {
@@ -308,7 +310,7 @@ export class ServerInstance {
     private getStaticFile(path: string, res: Response): void {
         const { fs } = firebot.modules;
         if (params && params.staticPath && fs.existsSync(params.staticPath)) {
-            const fileName = (path === '/' || path === '') ? 'index.html' : path.substring(1);
+            const fileName = path.split('/').pop() || path;
             const fileExtension = fileName.split('.').pop();
             const tryFiles = [`${this.serverKey}.${fileExtension}`, fileName];
             for (const file of tryFiles) {
@@ -339,17 +341,18 @@ export class ServerInstance {
         }
 
         // Fallback to built-in static files
-        switch (path) {
-            case '/chat.js':
+        const filename = path.split('/').pop() || path;
+        switch (filename) {
+            case 'chat.js':
                 res.setHeader('Content-Type', 'application/javascript');
                 res.send(chatJs);
                 return;
-            case '/chat.css':
+            case 'chat.css':
                 res.setHeader('Content-Type', 'text/css');
                 res.send(chatCss);
                 return;
-            case '/index.html':
-            case '/':
+            case 'index.html':
+            case '':
                 res.setHeader('Content-Type', 'text/html');
                 res.send(indexHtml);
                 return;

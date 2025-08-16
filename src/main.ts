@@ -15,6 +15,13 @@ export let params: Params;
 
 const scriptVersion = '0.0.1';
 
+export const IntegrationConstants = {
+    IntegrationId: 'mage-onscreen-chat',
+    IntegrationName: 'On-Screen Chat Overlay',
+    IntegrationVersion: scriptVersion,
+    DefaultServerKey: 'default'
+};
+
 const script: Firebot.CustomScript<Params> = {
     getScriptManifest: () => {
         return {
@@ -30,30 +37,31 @@ const script: Firebot.CustomScript<Params> = {
         return {
             routeKeys: {
                 type: 'string',
-                default: 'mage-onscreen-chat',
+                default: IntegrationConstants.DefaultServerKey,
                 title: 'Route Keys',
-                description: 'List of route keys to use for the chat overlay server. These will be used to form the URLs for the chat overlay.',
-                tip: 'Specify multiple route keys separated by spaces or commas.'
+                description: 'List of route keys to use for the chat overlay server.',
+                tip: 'This is for advanced users only. Most users can leave this blank. Separate multiple route keys with spaces or commas.',
+                showBottomHr: true
             },
             staticPath: {
                 type: 'filepath',
                 default: '',
-                title: 'Static Directory Path',
+                title: 'Customized Files Directory Path',
                 fileOptions: {
                     directoryOnly: true,
                     filters: [],
-                    title: 'Select Static Directory',
-                    buttonLabel: 'Select Directory'
+                    title: 'Select Customized Files Directory',
+                    buttonLabel: 'Choose'
                 },
                 description: 'You can place static files (HTML/CSS/JS) in this directory to override the built-in ones.',
-                tip: 'This can be used to serve custom HTML/CSS/JS files for the overlay.'
+                tip: 'This is used to customize the display of the overlay. Select the directory containing your custom HTML/CSS/JS files. If you are not using custom files, leave this blank.'
             }
         };
     },
     parametersUpdated: (p: Params) => {
         stopAllServers();
         params = p;
-        startAllServers(params.routeKeys.split(/[\s,]+/));
+        startAllServers(getRouteKeys(params.routeKeys));
     },
     run: (runRequest: RunRequest<Params>) => {
         firebot = runRequest;
@@ -61,22 +69,18 @@ const script: Firebot.CustomScript<Params> = {
         params = runRequest.parameters;
 
         const { effectManager } = firebot.modules;
-        if (!effectManager) {
-            logger.error("Effect Manager is not available. Please ensure the Firebot Mage Onscreen Chat script is properly installed.");
-            return;
-        }
-
         effectManager.registerEffect(clearChatEffect);
         effectManager.registerEffect(deleteByUserEffect);
         effectManager.registerEffect(deleteChatMessageEffect);
         effectManager.registerEffect(displayChatMessageEffect);
         effectManager.registerEffect(gigantifyEmoteEffect);
 
-        startAllServers(params.routeKeys.split(/[\s,]+/));
+        const routeKeys = getRouteKeys(params.routeKeys);
+        startAllServers(routeKeys);
 
         const { frontendCommunicator } = firebot.modules;
         frontendCommunicator.on('thestaticmage:firebot-mage-onscreen-chat:getRouteKeys', () => {
-            return params.routeKeys.split(/[\s,]+/);
+            return routeKeys;
         });
     },
     stop: () => {
@@ -84,5 +88,12 @@ const script: Firebot.CustomScript<Params> = {
         stopAllServers();
     }
 };
+
+function getRouteKeys(rk: string): string[] {
+    const routeKeys = rk.split(/[\s,\\/]+/);
+    routeKeys.push(IntegrationConstants.DefaultServerKey);
+    const uniqueRouteKeys = Array.from(new Set(routeKeys.filter(k => k.trim() !== '')));
+    return uniqueRouteKeys;
+}
 
 export default script;
