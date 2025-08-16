@@ -1,0 +1,157 @@
+{
+    "name": "Mage Onscreen Chat - Default Events",
+    "description": "Default events for the Mage Onscreen Chat -- https://github.com/TheStaticMage/firebot-mage-onscreen-chat",
+    "version": 1,
+    "author": "thestaticmage",
+    "components": {
+        "commands": [],
+        "counters": [],
+        "currencies": [],
+        "effectQueues": [],
+        "events": [],
+        "eventGroups": [
+            {
+                "id": "2c694c9b-3cc6-47ab-96fe-07ca13fbdf9f",
+                "name": "Chat Overlay Events",
+                "active": true,
+                "events": [
+                    {
+                        "name": "Chat Message -> Chat Overlay",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [],
+                        "eventId": "chat-message",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "7742382a-3150-4fdf-b313-96f95d1d5fe0",
+                                    "type": "thestaticmage:firebot-mage-onscreen-chat:display-chat-message",
+                                    "active": true,
+                                    "routeKey": "default",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "6d6b4d24-f265-4a22-aa2d-704b32a08ab1"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "e8830b01-f698-4665-a79b-07a8a99228f7"
+                    },
+                    {
+                        "name": "Chat Message Deleted -> Chat Overlay",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [],
+                        "eventId": "chat-message-deleted",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "37e66e81-f04f-4fea-bce4-7e673d3ebaae",
+                                    "type": "thestaticmage:firebot-mage-onscreen-chat:delete-chat-message",
+                                    "active": true,
+                                    "routeKey": "default",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "560802d6-f443-4d4c-9574-d212e999ef36"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "c90eab60-6d9e-463a-be76-cc3e45405af0"
+                    },
+                    {
+                        "name": "Chat Cleared -> Chat Overlay",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [],
+                        "eventId": "chat-cleared",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "943b9940-7004-4551-a578-596e1d8abe21",
+                                    "type": "thestaticmage:firebot-mage-onscreen-chat:clear-chat",
+                                    "active": true,
+                                    "routeKey": "default",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "20bcf6b2-5ee4-4b60-870a-e999e6ac5720"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "ff7b03e4-8f8e-4346-8380-e27ce1555d99"
+                    },
+                    {
+                        "name": "Viewer Banned -> Chat Overlay",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [],
+                        "eventId": "banned",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "27b33cf1-000f-4ec7-8f94-408ff23249c1",
+                                    "type": "thestaticmage:firebot-mage-onscreen-chat:delete-by-user",
+                                    "active": true,
+                                    "routeKey": "default",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "8ba89d58-5abc-4784-9e07-9b2717396a9c"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "ea2d689e-4374-4748-80e9-9cd36c790334"
+                    },
+                    {
+                        "name": "Viewer Timeout -> Chat Overlay",
+                        "active": true,
+                        "cached": true,
+                        "sortTags": [],
+                        "eventId": "timeout",
+                        "sourceId": "twitch",
+                        "effects": {
+                            "list": [
+                                {
+                                    "id": "40d31dcf-188b-422b-b6b0-1a5c7166af05",
+                                    "type": "thestaticmage:firebot-mage-onscreen-chat:delete-by-user",
+                                    "active": true,
+                                    "routeKey": "default",
+                                    "percentWeight": null
+                                }
+                            ],
+                            "id": "b269dd26-df65-49c5-8321-92628a59233d"
+                        },
+                        "filterData": {
+                            "mode": "exclusive",
+                            "filters": []
+                        },
+                        "id": "db27535f-e981-4e05-969a-2000f8073942"
+                    }
+                ]
+            }
+        ],
+        "hotkeys": [],
+        "presetEffectLists": [],
+        "timers": [],
+        "scheduledTasks": [],
+        "variableMacros": [],
+        "viewerRoles": [],
+        "viewerRankLadders": [],
+        "quickActions": []
+    },
+    "requireCurrency": false,
+    "importQuestions": []
+}

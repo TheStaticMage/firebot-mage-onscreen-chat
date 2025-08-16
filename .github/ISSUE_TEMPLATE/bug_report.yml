@@ -27,10 +27,10 @@ body:
     validations:
       required: false
   - type: input
-    id: firebotRateLimiter_version
+    id: plugin_version
     attributes:
-      label: Firebot Rate Limiter Version
-      description: What version of Firebot Rate Limiter are you running?
+      label: Mage Onscreen Chat Version
+      description: What version of Mage Onscreen Chat are you running?
     validations:
       required: true
   - type: input
