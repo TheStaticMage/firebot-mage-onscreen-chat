@@ -15,7 +15,7 @@ type effectParams = {
 export const gigantifyEmoteEffect: Firebot.EffectType<effectParams> = {
     definition: {
         id: 'thestaticmage:firebot-mage-onscreen-chat:gigantify-emote',
-        name: 'Gigantify Emote',
+        name: 'Gigantify Emote in Chat Overlay',
         description: 'Gigantifies an emote on the chat overlay.',
         icon: 'fas fa-comment',
         categories: ["scripting"],
@@ -25,7 +25,7 @@ export const gigantifyEmoteEffect: Firebot.EffectType<effectParams> = {
         <eos-container header="Effect Information">
             <div class="effect-info">
                 <p>This effect gigantifies an emote in the chat overlay.</p>
-                <p>It is recommended to add this effect to the "Channel Automatic Reward Redemption" event to transmit the information when someone gigantifies an emote on Twitch.</p>
+                <p>It is recommended to add this effect to the "Power-up: Gigantify an Emote" event to transmit the information when someone gigantifies an emote on Twitch.</p>
             </div>
         </eos-container>
         <eos-container header="Route Key">
@@ -43,6 +43,9 @@ export const gigantifyEmoteEffect: Firebot.EffectType<effectParams> = {
             acc[key] = key;
             return acc;
         }, {});
+        if (!$scope.effect.routeKey) {
+            $scope.effect.routeKey = 'default';
+        }
     },
     optionsValidator: (effect: effectParams): string[] => {
         const errors: string[] = [];
