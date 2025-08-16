@@ -13,7 +13,7 @@ type deleteByUserEffectParams = {
 export const deleteByUserEffect: Firebot.EffectType<deleteByUserEffectParams> = {
     definition: {
         id: 'thestaticmage:firebot-mage-onscreen-chat:delete-by-user',
-        name: 'Delete Chat Messages by User in Chat Overlay',
+        name: 'Delete Messages by User in Chat Overlay',
         description: 'Deletes all chat messages from a specific user in the chat overlay.',
         icon: 'fas fa-user-slash',
         categories: ["scripting"],
@@ -41,6 +41,9 @@ export const deleteByUserEffect: Firebot.EffectType<deleteByUserEffectParams> = 
             acc[key] = key;
             return acc;
         }, {});
+        if (!$scope.effect.routeKey) {
+            $scope.effect.routeKey = 'default';
+        }
     },
     optionsValidator: (effect: deleteByUserEffectParams): string[] => {
         const errors: string[] = [];

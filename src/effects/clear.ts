@@ -13,7 +13,7 @@ type clearChatEffectParams = {
 export const clearChatEffect: Firebot.EffectType<clearChatEffectParams> = {
     definition: {
         id: 'thestaticmage:firebot-mage-onscreen-chat:clear-chat',
-        name: 'Clear Chat Messages in Chat Overlay',
+        name: 'Clear Messages in Chat Overlay',
         description: 'Clears all chat messages in the chat overlay.',
         icon: 'fas fa-trash',
         categories: ["scripting"],
@@ -41,6 +41,9 @@ export const clearChatEffect: Firebot.EffectType<clearChatEffectParams> = {
             acc[key] = key;
             return acc;
         }, {});
+        if (!$scope.effect.routeKey) {
+            $scope.effect.routeKey = 'default';
+        }
     },
     optionsValidator: (effect: clearChatEffectParams): string[] => {
         const errors: string[] = [];

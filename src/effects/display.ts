@@ -18,7 +18,7 @@ type displayChatMessageEffectParams = {
 export const displayChatMessageEffect: Firebot.EffectType<displayChatMessageEffectParams> = {
     definition: {
         id: 'thestaticmage:firebot-mage-onscreen-chat:display-chat-message',
-        name: 'Display message on Chat Overlay',
+        name: 'Display Message in Chat Overlay',
         description: 'Displays a chat message on the chat overlay.',
         icon: 'fas fa-comment',
         categories: ["scripting"],
@@ -46,6 +46,9 @@ export const displayChatMessageEffect: Firebot.EffectType<displayChatMessageEffe
             acc[key] = key;
             return acc;
         }, {});
+        if (!$scope.effect.routeKey) {
+            $scope.effect.routeKey = 'default';
+        }
     },
     optionsValidator: (effect: displayChatMessageEffectParams): string[] => {
         const errors: string[] = [];
