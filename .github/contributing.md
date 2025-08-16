@@ -1,6 +1,6 @@
 # Contribution Guidelines
 
-## Welcome!
+## Welcome
 
 Thank you for your interest in contributing.
 
