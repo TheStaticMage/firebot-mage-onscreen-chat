@@ -4,7 +4,12 @@ import { getServer } from '../server/manage';
 import { Effects } from '@crowbartools/firebot-custom-scripts-types/types/effects';
 
 const deleteByUserEffectTriggers: Effects.TriggersObject = {};
-deleteByUserEffectTriggers["event"] = ["twitch:banned", "twitch:timeout"];
+deleteByUserEffectTriggers["event"] = [
+    "mage-kick-integration:banned",
+    "mage-kick-integration:timeout",
+    "twitch:banned",
+    "twitch:timeout"
+];
 
 type deleteByUserEffectParams = {
     routeKey: string;

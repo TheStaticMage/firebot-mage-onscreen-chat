@@ -308,7 +308,7 @@ function createMessageRow(message) {
 
     // Get profile image for the user (for subscribers, mods, etc.) and a blank
     // image if not available or not applicable.
-    if (message.profilePicUrl) {
+    if (message.profilePicUrl && message.profilePicUrl !== "https://kick.com/favicon.ico") { // Profile images broken on Kick
         const profileImageElementName = `profile-image-${message.userId}`;
         let profileImageElement = document.getElementById(profileImageElementName);
         if (profileImageElement) {
