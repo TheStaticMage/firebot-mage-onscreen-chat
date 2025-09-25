@@ -8,7 +8,10 @@ import { ChatServerPayload } from '../types/payloads';
 
 const displayChatMessageEffectTriggers: Effects.TriggersObject = {};
 displayChatMessageEffectTriggers["command"] = true;
-displayChatMessageEffectTriggers["event"] = ["twitch:chat-message"];
+displayChatMessageEffectTriggers["event"] = [
+    "mage-kick-integration:chat-message",
+    "twitch:chat-message"
+];
 displayChatMessageEffectTriggers["manual"] = true;
 
 type displayChatMessageEffectParams = {

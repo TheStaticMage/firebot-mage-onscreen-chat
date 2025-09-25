@@ -4,7 +4,10 @@ import { logger } from '../main';
 import { getServer } from '../server/manage';
 
 const deleteChatMessageEffectTriggers: Effects.TriggersObject = {};
-deleteChatMessageEffectTriggers["event"] = ["twitch:chat-message-deleted"];
+deleteChatMessageEffectTriggers["event"] = [
+    "mage-kick-integration:chat-message-deleted",
+    "twitch:chat-message-deleted"
+];
 
 type chatMessageDeletedMetadata = {
     username: string;

@@ -4,7 +4,10 @@ import { logger } from '../main';
 import { getServer } from '../server/manage';
 
 const clearChatEffectTriggers: Effects.TriggersObject = {};
-clearChatEffectTriggers["event"] = ["twitch:chat-cleared"];
+clearChatEffectTriggers["event"] = [
+    "mage-kick-integration:chat-cleared",
+    "twitch:chat-cleared"
+];
 
 type clearChatEffectParams = {
     routeKey: string;
