@@ -45,6 +45,8 @@ jobs:
           sed -i 's/"version": "[^"]*"/"version": "${{ steps.bump_version.outputs.next-version }}"/' package.json
       - name: Run version bump script
         run: npm run build:version
+      - name: Regenerate package-lock.json
+        run: npm install
       - name: Output changes
         run: git diff
       - name: npm build
@@ -60,6 +62,7 @@ jobs:
           labels: 'ignore-for-release'
           add-paths: |
             package.json
+            package-lock.json
             src/main.ts
           commit-message: "Bump version to ${{ steps.bump_version.outputs.next-version }}"
           reviewers: "TheStaticMage"
