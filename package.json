@@ -15,8 +15,10 @@
     },
     "author": "thestaticmage",
     "license": "GNU3",
+    "dependencies": {
+        "@crowbartools/firebot-custom-scripts-types": "github:TheStaticMage/firebot-custom-scripts-types#running"
+    },
     "devDependencies": {
-        "@crowbartools/firebot-custom-scripts-types": "github:TheStaticMage/firebot-custom-scripts-types#running",
         "@eslint/js": "^9.28.0",
         "@stylistic/eslint-plugin": "^4.4.1",
         "@types/express": "^4.17.21",
