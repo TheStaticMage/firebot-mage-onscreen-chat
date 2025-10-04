@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is a customizable on-screen chat display for [Firebot](https://firebot.app).
+This is a customizable on-screen chat display for your Twitch chat messages via [Firebot](https://firebot.app).
 
 Features:
 
@@ -12,8 +12,9 @@ Features:
 - Display user profile images
 - Deleting messages in chat removes them from the display
 - Clearing chat clears the display
-- Supports gigantified emotes ([requires pre-release Firebot](/doc/gigantified-emotes.md))
+- Supports gigantified emotes ([Firebot 5.65+ only](/doc/gigantified-emotes.md))
 - Supports multiple instances with separate message content
+- Supports Kick.com messages ([with my Kick integration](https://github.com/TheStaticMage/firebot-mage-kick-integration))
 
 Customizable:
 
