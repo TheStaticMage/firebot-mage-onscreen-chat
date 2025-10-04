@@ -11,6 +11,7 @@ Features:
 - Display badges
 - Display user profile images
 - Deleting messages in chat removes them from the display
+- Banning / timing-out a user clears their messages
 - Clearing chat clears the display
 - Supports gigantified emotes ([Firebot 5.65+ only](/doc/gigantified-emotes.md))
 - Supports multiple instances with separate message content
