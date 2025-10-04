@@ -35,6 +35,7 @@ Customizable:
 - Advanced Topics
   - [Gigantified Emote Support](/doc/gigantified-emotes.md)
   - [Route Keys](/doc/route-keys.md)
+  - [Avoiding Browser Source Refreshes](/doc/browser-source-refreshes.md)
 
 ## Support
 
