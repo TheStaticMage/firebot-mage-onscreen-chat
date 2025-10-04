@@ -1,7 +1,7 @@
 {
     "name": "firebot-mage-onscreen-chat",
     "scriptOutputName": "firebot-mage-onscreen-chat",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "An on-screen chat overlay for Firebot",
     "main": "",
     "scripts": {
