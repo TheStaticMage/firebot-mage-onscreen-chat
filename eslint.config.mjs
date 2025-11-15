@@ -6,10 +6,23 @@ import stylistic from '@stylistic/eslint-plugin';
 
 export default tseslint.config(
   eslint.configs.recommended,
-  tseslint.configs.strictTypeChecked,
-  tseslint.configs.stylistic,
-    {
+  {
+        ignores: [
+            'dist/**',
+            'node_modules/**',
+            'build/**',
+            'scripts/**',
+            'static/**',
+            'webpack.config.js',
+            'jest.config.js',
+        ],
+  },
+  {
         files: ['**/*.ts', '**/*.tsx'],
+        extends: [
+            ...tseslint.configs.strictTypeChecked,
+            ...tseslint.configs.stylistic,
+        ],
         languageOptions: {
             parserOptions: {
                 projectService: true,
