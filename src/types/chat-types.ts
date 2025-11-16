@@ -65,4 +65,5 @@ export type FirebotChatMessage = {
     customHighlightColor?: string;
     customBannerIcon?: string;
     customBannerText?: string;
+    isGigantified?: boolean;
 };

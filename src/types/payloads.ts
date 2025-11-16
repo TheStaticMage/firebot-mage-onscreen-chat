@@ -9,4 +9,5 @@ export interface ChatServerPayload {
 export interface PollPayload {
     messages: Message[];
     token: string;
+    enableGigantifiedEmotes?: boolean;
 }
