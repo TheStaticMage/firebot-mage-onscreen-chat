@@ -12,14 +12,12 @@ You will need to use a [Firebot nightly build](https://github.com/crowbartools/f
 
 ## Configuration
 
-1. Under Events, click **New Event**.
-2. Select _Power-up: Gigantify an Emote (Twitch)_.
+No additional configuration is required!
 
-   Note: If you don't see _Power-up: Gigantify an Emote (Twitch)_ as a choice, then you must not have read the previous section. Double-check your Firebot version!
+Gigantified emotes are automatically detected and displayed when the chat message arrives. The overlay reads the `isGigantified` property directly from the chat message, which Firebot sets automatically when a viewer uses the "Gigantify an Emote" power-up.
 
-3. Add a new effect as follows:
-
-    - Type: _Gigantify Emote_
-    - Route Key: `default` (or another route key if you know what you're doing)
+The last emote in the message will be displayed at 72×72 pixels instead of the standard 28×28 pixels.
 
 :bulb: You can redeem "Gigantify an Emote" on your own channel for free to test this.
+
+:bulb: If you don't want Gigantified emotes, there is an option under Settings &gt; Scripts &gt; Manage Startup Scripts &gt; On-Screen Chat Overlay &gt; Edit to turn this off.

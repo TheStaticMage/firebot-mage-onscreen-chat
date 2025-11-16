@@ -1,5 +1,6 @@
 const messages = [];
 const maxMessageAge = 1200000; // 20 minutes
+let enableGigantifiedEmotes = true; // Default to true
 
 document.addEventListener('DOMContentLoaded', function () {
     let token = "";
@@ -15,8 +16,12 @@ document.addEventListener('DOMContentLoaded', function () {
         })
         .then(async data => {
             try {
+                // Update gigantified emotes setting from server
+                if (data.enableGigantifiedEmotes !== undefined) {
+                    enableGigantifiedEmotes = data.enableGigantifiedEmotes;
+                }
                 if (Array.isArray(data.messages) && data.messages.length > 0) {
-                    const messages = data.messages.filter(msg => msg.action === 'add' || msg.action === 'gigantify_an_emote');
+                    const messages = data.messages.filter(msg => msg.action === 'add');
                     const messageIds = messages.map(msg => msg.message ? msg.message.id : msg.messageId);
                     for (let i = 0; i < data.messages.length; i++) {
                         await processMessage(data.messages[i], messageIds);
@@ -55,9 +60,6 @@ async function processMessage(message, animatedMessageIds) {
             break;
         case 'clear':
             await clearMessages();
-            break;
-        case 'gigantify_an_emote':
-            await gigantifyEmote(message.messageId);
             break;
         default:
             console.warn('Unknown instruction action:', message.action);
@@ -147,26 +149,6 @@ function getChatWindowDimensions() {
     return { top: chatWindowTop, height: chatWindowHeight };
 }
 
-async function gigantifyEmote(messageId) {
-    // Find all elements starting with 'emote-{messageId}-'
-    const emoteElements = document.querySelectorAll(`[id^="emote-${messageId}-"]`);
-    if (emoteElements.length === 0) {
-        console.warn(`gigantifyEmote: No emotes found for message ID ${messageId}`);
-        return;
-    }
-
-    // Add the gigantified class to the highest numbered emote element
-    const highestEmoteElement = Array.from(emoteElements).reduce((highest, current) => {
-        const currentId = parseInt(current.id.split('-').pop(), 10);
-        const highestId = parseInt(highest.id.split('-').pop(), 10);
-        return currentId > highestId ? current : highest;
-    });
-
-    highestEmoteElement.classList.add('emote-image-gigantified');
-    console.log(`Emote with ID ${highestEmoteElement.id} gigantified for message ID ${messageId}`);
-    await updateDisplay();
-}
-
 async function doAnimations(newTop, messageIds) {
     const chatWindow = document.getElementById('chat-window');
     if (!chatWindow) return;
@@ -234,8 +216,20 @@ function getMessageDivBottom(messageDivId) {
     return messageDivBottom;
 }
 
-function getMessageText(messageId, parts) {
+function getMessageText(messageId, parts, isGigantified = false) {
     if (!parts || !Array.isArray(parts)) return '';
+
+    // Find the index of the last emote if gigantified
+    let lastEmoteIndex = -1;
+    if (isGigantified) {
+        for (let i = parts.length - 1; i >= 0; i--) {
+            if (parts[i].type === 'emote' || parts[i].type === 'third-party-emote') {
+                lastEmoteIndex = i;
+                break;
+            }
+        }
+    }
+
     let formattedParts = parts.map((part, idx) => {
         if (part.type === 'text') {
             return part.text.replace(/[&<>"']/g, ch => `&#${ch.charCodeAt(0)};`);
@@ -244,6 +238,9 @@ function getMessageText(messageId, parts) {
             let emoteImageElement = document.createElement('img');
             emoteImageElement.id = `emote-${messageId}-${idx}`;
             emoteImageElement.className = 'emote-image';
+            if (idx === lastEmoteIndex) {
+                emoteImageElement.classList.add('emote-image-gigantified');
+            }
             emoteImageElement.src = part.animatedUrl || part.url;
             emoteImageElement.alt = part.name;
             emoteImageElement.style.verticalAlign = 'middle';
@@ -347,7 +344,7 @@ function createMessageRow(message) {
     // Add the message text to the right container.
     const messageTextElement = document.createElement('span');
     messageTextElement.className = 'message-text';
-    messageTextElement.innerHTML = getMessageText(message.id, message.parts);
+    messageTextElement.innerHTML = getMessageText(message.id, message.parts, enableGigantifiedEmotes && message.isGigantified);
     messageTextElement.classList.add(getClassFromUserType('text', message));
     messageTextElement.classList.add('message-text-username-' + (message.username || 'unknown'));
     if (message.action) {

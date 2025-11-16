@@ -7,7 +7,6 @@ import { deleteByUserEffect } from './effects/delete-by-user';
 import { displayChatMessageEffect } from './effects/display';
 import { startAllServers, stopAllServers } from './server/manage';
 import { Params } from './types/params';
-import { gigantifyEmoteEffect } from './effects/gigantify';
 
 export let firebot: RunRequest<Params>;
 export let logger: Logger;
@@ -54,7 +53,15 @@ const script: Firebot.CustomScript<Params> = {
                     buttonLabel: 'Choose'
                 },
                 description: 'You can place static files (HTML/CSS/JS) in this directory to override the built-in ones.',
-                tip: 'This is used to customize the display of the overlay. Select the directory containing your custom HTML/CSS/JS files. If you are not using custom files, leave this blank.'
+                tip: 'This is used to customize the display of the overlay. Select the directory containing your custom HTML/CSS/JS files. If you are not using custom files, leave this blank.',
+                showBottomHr: true
+            },
+            enableGigantifiedEmotes: {
+                type: 'boolean',
+                default: true,
+                title: 'Enable Gigantified Emotes',
+                description: 'Requires Firebot 5.65+',
+                tip: 'When enabled, emotes from "Gigantify an Emote" power-ups will be displayed larger in the chat overlay.'
             }
         };
     },
@@ -73,7 +80,6 @@ const script: Firebot.CustomScript<Params> = {
         effectManager.registerEffect(deleteByUserEffect);
         effectManager.registerEffect(deleteChatMessageEffect);
         effectManager.registerEffect(displayChatMessageEffect);
-        effectManager.registerEffect(gigantifyEmoteEffect);
 
         const routeKeys = getRouteKeys(params.routeKeys);
         startAllServers(routeKeys);

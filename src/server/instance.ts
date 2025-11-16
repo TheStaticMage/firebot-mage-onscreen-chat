@@ -2,7 +2,6 @@ import type { Request, Response } from "express";
 import { firebot, IntegrationConstants, logger, params } from '../main';
 import { Message } from '../types/message';
 import { ChatServerPayload, PollPayload } from "../types/payloads";
-import { FirebotChatMessage } from "../types/chat-types";
 
 // These need to stay as 'require' to allow the embedded static files to be used
 // when the script is run in Firebot.
@@ -14,63 +13,7 @@ const messageCleanupInterval = 1000 * 120; // milliseconds
 const messageTtl = 1000 * 60 * 30; // milliseconds
 const pollInterval = 200; // milliseconds
 
-class GigantifiedEmoteManager {
-    private gigantifiedEmotes = new Map<string, number>();
-
-    constructor() {
-        // Clean up old gigantified emotes every 5 seconds
-        setInterval(() => {
-            this.cleanUpOldGigantifiedEmotes();
-        }, 5000);
-    }
-
-    public processGigantifiedEmoteEvent(server: ServerInstance, username: string, messageText: string): void {
-        if (!username || !messageText) {
-            throw new Error('Invalid request: "username" and "messageText" are required');
-        }
-
-        // See if we can find the message that this redeem applies to. If so we
-        // can modify that message and we don't need to record the gigantified
-        // emote in the cache.
-        const timestamp = Date.now();
-        const messages = server.getMessages();
-        const message = messages.find(msg => msg.message?.username === username && msg.message?.rawText === messageText && Math.abs(msg.timestamp - timestamp) < 2000);
-        if (message && message.messageId) {
-            server.gigantifyEmoteInMessage(message.messageId);
-            server.log(`Gigantified emote found in existing message for user: ${username}, message: ${message.messageId}`);
-            return;
-        }
-
-        // If we didn't find a message, we need to record the gigantified emote
-        // in the cache so that when the message does come in, we can gigantify
-        // it.
-        const gigantifiedEmoteKey = `${username}:${messageText}`;
-        this.gigantifiedEmotes.set(gigantifiedEmoteKey, Date.now());
-        server.log(`Gigantified emote recorded for user: ${username}, message: ${messageText}, cache: ${JSON.stringify(Object.fromEntries(this.gigantifiedEmotes))}`);
-    }
-
-    public checkMessageForGigantifiedEmotes(server: ServerInstance, message: FirebotChatMessage): void {
-        const check = `${message.username}:${message.rawText}`;
-        if (this.gigantifiedEmotes.has(check)) {
-            server.gigantifyEmoteInMessage(message.id);
-            server.log(`Gigantified emote found in existing message for user: ${message.username}, message: ${message.id}`);
-            this.gigantifiedEmotes.delete(check);
-            return;
-        }
-    }
-
-    private cleanUpOldGigantifiedEmotes(): void {
-        const now = Date.now();
-        this.gigantifiedEmotes.forEach((timestamp, gigantifiedEmote) => {
-            if (now - timestamp > 5000) { // 5 seconds
-                this.gigantifiedEmotes.delete(gigantifiedEmote);
-            }
-        });
-    }
-}
-
 export class ServerInstance {
-    private gigantifiedEmoteManager: GigantifiedEmoteManager = new GigantifiedEmoteManager();
     private isRegistered = false;
     private messageCleaner: NodeJS.Timeout | null = null;
     private messages = new Map<string, Message>();
@@ -174,8 +117,6 @@ export class ServerInstance {
         this.messages.set(messageId, msg);
 
         this.log(`Received message ID: ${msg.id}: total messages: ${this.messages.size}`);
-
-        this.gigantifiedEmoteManager.checkMessageForGigantifiedEmotes(this, payload.message);
     }
 
     clearMessages(): void {
@@ -268,28 +209,6 @@ export class ServerInstance {
         }
 
         return Array.from(this.messages.values()).slice(messageIndex + 1);
-    }
-
-    gigantifyEmote(username: string, messageText: string, emoteText: string): void {
-        if (!username || !messageText || !emoteText) {
-            throw new Error('Invalid request: "username", "messageText", and "emoteText" are required');
-        }
-        this.gigantifiedEmoteManager.processGigantifiedEmoteEvent(this, username, messageText);
-    }
-
-    gigantifyEmoteInMessage(messageId: string): void {
-        if (!messageId) {
-            throw new Error('Invalid request: "messageId" is required');
-        }
-
-        const eventId = crypto.randomUUID();
-        const message: Message = {
-            id: eventId,
-            action: 'gigantify_an_emote',
-            messageId: messageId,
-            timestamp: Date.now()
-        };
-        this.messages.set(eventId, message);
     }
 
     private cleanOldMessages(): void {
@@ -389,7 +308,8 @@ export class ServerInstance {
                 that.requestLogger(req, `Returning ${result.length} messages since token: ${token}`);
                 const response: PollPayload = {
                     messages: result,
-                    token: lastMessageId
+                    token: lastMessageId,
+                    enableGigantifiedEmotes: params.enableGigantifiedEmotes !== false
                 };
                 res.json(response);
             } else {
