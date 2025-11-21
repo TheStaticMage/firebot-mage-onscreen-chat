@@ -12,7 +12,7 @@ export let firebot: RunRequest<Params>;
 export let logger: Logger;
 export let params: Params;
 
-const scriptVersion = '1.0.1';
+const scriptVersion = '1.1.0';
 
 export const IntegrationConstants = {
     IntegrationId: 'mage-onscreen-chat',
