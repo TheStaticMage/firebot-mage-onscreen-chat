@@ -75,6 +75,23 @@ const script: Firebot.CustomScript<Params> = {
         logger = runRequest.modules.logger;
         params = runRequest.parameters;
 
+        const firebotVersion = firebot.firebot.version;
+        const firebotParts = firebotVersion.split('.');
+        const majorVersion = parseInt(firebotParts[0], 10);
+        const minorVersion = parseInt(firebotParts[1], 10);
+
+        if (isNaN(majorVersion) || isNaN(minorVersion) || majorVersion < 5 ||
+            (majorVersion === 5 && minorVersion < 65)) {
+            logger.error(`The installed version of On-Screen Chat Overlay requires Firebot 5.65 or later. You are running Firebot ${firebotVersion}.`);
+            const { frontendCommunicator } = firebot.modules;
+            frontendCommunicator.send('notification', {
+                title: 'On-Screen Chat Overlay Error',
+                message: `This plugin requires Firebot 5.65 or later. You are running Firebot ${firebotVersion}.`,
+                type: 'error'
+            });
+            return;
+        }
+
         const { effectManager } = firebot.modules;
         effectManager.registerEffect(clearChatEffect);
         effectManager.registerEffect(deleteByUserEffect);
