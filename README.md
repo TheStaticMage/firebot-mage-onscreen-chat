@@ -52,7 +52,7 @@ Contributions are welcome via [Pull Requests](https://github.com/TheStaticMage/f
 
 ## License
 
-This script is released under the [GNU General Public License version 3](/LICENSE). That makes it free to use whether your stream is monetized or not.
+This plugin is released under the [GNU General Public License version 3](/LICENSE). That makes it free to use whether your stream is monetized or not.
 
 If you use this on your stream, I would appreciate a shout-out. (Appreciated, but not required.)
 

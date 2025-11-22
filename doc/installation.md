@@ -1,20 +1,18 @@
 # Installation and Configuration
 
-## Installation: Script
+## Version Compatibility
 
-1. From the latest [Release](https://github.com/TheStaticMage/firebot-mage-onscreen-chat/releases), download `firebot-mage-onscreen-chat-<version>.js` into your Firebot scripts directory
+| Plugin Version | Minimum Firebot Version |
+| --- | --- |
+| 1.1.0+ | 5.65 |
+| 1.0.1 | 5.64 |
 
-    (File &gt; Open Data Folder, then select the "scripts" directory)
+## Installation: Plugin
 
-    :warning: Be sure you download the file from the releases page, not the source code of the GitHub repository!
-
-2. Enable custom scripts in Firebot (Settings &gt; Scripts) if you have not already done so.
-
-3. Go to Settings &gt; Scripts &gt; Manage Startup Scripts &gt; Add New Script and add the `firebot-mage-onscreen-chat-<version>.js` script.
-
-    :bulb: For now, it is suggested to leave the script settings at their defaults. You can always come back to change these later.
-
-4. Restart Firebot. (The script will _not_ be loaded until you actually restart Firebot.)
+1. Enable custom scripts in Firebot (Settings > Scripts) if you have not already done so.
+2. From the latest [Release](https://github.com/TheStaticMage/firebot-mage-onscreen-chat/releases), download `firebot-mage-onscreen-chat-<version>.js` into your Firebot scripts directory (File > Open Data Folder, then select the "scripts" directory).
+3. Go to Settings > Scripts > Manage Startup Scripts > Add New Script and add the `firebot-mage-onscreen-chat-<version>.js` script.
+4. Restart Firebot. (The plugin will _not_ be loaded until you actually restart Firebot.)
 
 ## Configuration: OBS
 
