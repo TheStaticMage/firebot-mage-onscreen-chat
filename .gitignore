@@ -21,3 +21,6 @@ node_modules/
 # Custom files
 /custom/*
 !/custom/README.md
+/.claude
+/.github/copilot-instructions.md
+/AGENTS.md
