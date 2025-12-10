@@ -6,9 +6,7 @@ The Mage Onscreen Chat supports "gigantified emotes" which is a power-up that vi
 
 ## Firebot version
 
-This requires functionality that is only available in Firebot 5.65 and higher.
-
-You will need to use a [Firebot nightly build](https://github.com/crowbartools/firebot-nightly) until Firebot 5.65 is officially released.
+This requires Firebot 5.65 or higher.
 
 ## Configuration
 
