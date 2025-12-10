@@ -5,7 +5,7 @@
 | Plugin Version | Minimum Firebot Version |
 | --- | --- |
 | 1.1.0+ | 5.65 |
-| 1.0.1 | 5.64 |
+| 1.0.1 | 5.64 (deprecated) |
 
 ## Versioning Philosophy
 
@@ -26,7 +26,7 @@ Optional: Delete any older versions of this plugin from your Firebot scripts dir
 
 ### From 1.0.0 or 1.0.1 -> 1.1.0+
 
-:fire: Version 1.1.0 and higher require Firebot 5.65 or later. If you are running Firebot 5.64, stay on version 1.0.1.
+:fire: Version 1.1.0 and higher require Firebot 5.65 or later.
 
 ### From 0.0.1 -> 1.0.0
 
