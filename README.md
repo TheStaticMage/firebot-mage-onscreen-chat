@@ -66,4 +66,10 @@ If you use this on your stream, I would appreciate a shout-out. (Appreciated, bu
 
 _**Important**: The answer provided is my personal interpretation of Twitch's Terms of Service. It may not be complete, up to date, or accurate. You should always verify details directly with Twitch's official documentation and make your own informed decisions._
 
-The [Twitch Terms of Service: Simulcasting](https://legal.twitch.com/legal/terms-of-service/#11-simulcasting) guidelines prohibit you from combining activity from other platforms or services on your Twitch stream during your Simulcast, such as merging chat. However, displaying just your Twitch chat on your stream is fine with Twitch. Firebot only supports Twitch at ths time, so only Twitch messages are being sent to this display. You should not run into a problem even if you are simulcasting to another platform. (Note: if you're using my [Firebot Kick Integration](https://github.com/TheStaticMage/firebot-mage-kick-integration) too, you should not route messages from both Twitch and Kick chat events to your chat display.)
+The answer to this question has always been "yes" for Twitch chat.
+
+In the past, Twitch prohibited streamers from displaying chat messages from other platforms on their Twitch streams. However, in February 2026, the Twitch CEO [stated that they would not be taking enforcement action for displaying chat from other platforms](https://www.twitch.tv/videos/2706691276?t=00h42m33s). If you're using my [Firebot Kick Integration](https://github.com/TheStaticMage/firebot-mage-kick-integration) or [YouTube Integration](https://github.com/TheStaticMage/firebot-mage-youtube-integration), this should make it safe to add those chat messages to your display as well.
+
+### How is this different from the on-screen chat widget being built into Firebot 5.66?
+
+The developers added a chat widget that's integrated in Firebot 5.66 itself, without a plugin. My chat overlay was created before they added it to the program, so I suggest that you just choose the one that works best for you.
