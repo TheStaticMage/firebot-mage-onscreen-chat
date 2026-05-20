@@ -72,4 +72,4 @@ In the past, Twitch prohibited streamers from displaying chat messages from othe
 
 ### How is this different from the on-screen chat widget being built into Firebot 5.66?
 
-Starting in [this commit](https://github.com/crowbartools/Firebot/commit/a7f017c690d3a01d1360a52a8a81aa9496bd67f9), the Firebot developers have begun to create a chat widget that's integrated in Firebot itself, without a plugin. As of the time of this writing, that is available in nightly builds, and should release with Firebot 5.66. My chat overlay was created before this, and I have not yet taken the time to do a comparison between what I wrote and what's currently under active development in Firebot itself. I'd just advise you to try both and see which works best for you!
+The developers added a chat widget that's integrated in Firebot 5.66 itself, without a plugin. My chat overlay was created before they added it to the program, so I suggest that you just choose the one that works best for you.
