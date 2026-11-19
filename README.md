@@ -1,5 +1,9 @@
 # Mage's Firebot On-Screen Chat Display
 
+## Deprecation Notice
+
+This plugin is not tested with Firebot 5.67 or later and will no longer be developed. No support or updates will be provided. Code and documentation remain archived here for reference purposes only.
+
 ## Introduction
 
 This is a customizable on-screen chat display for your Twitch chat messages via [Firebot](https://firebot.app).
@@ -36,7 +40,7 @@ Customizable:
   - [Gigantified Emote Support](/doc/gigantified-emotes.md)
   - [Route Keys](/doc/route-keys.md)
   - [Avoiding Browser Source Refreshes](/doc/browser-source-refreshes.md)
-
+<!--
 ## Support
 
 The best way to get help is in this project's thread on Discord. Join [The Static Discord](https://discord.gg/EJ6EvS2qJb) and then visit the `#firebot-mage-onscreen-chat` channel there.
@@ -73,3 +77,4 @@ In the past, Twitch prohibited streamers from displaying chat messages from othe
 ### How is this different from the on-screen chat widget being built into Firebot 5.66?
 
 The developers added a chat widget that's integrated in Firebot 5.66 itself, without a plugin. My chat overlay was created before they added it to the program, so I suggest that you just choose the one that works best for you.
+-->
